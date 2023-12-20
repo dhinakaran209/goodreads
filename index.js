@@ -69,6 +69,7 @@ app.post("/login/", async (request, response) => {
   const checkUserQuery = `SELECT * FROM user WHERE username = '${username}'`;
   const dbUser = await db.get(checkUserQuery);
   if (dbUser === undefined) {
+    response.status(400);
     response.send("Wrong Username");
   } else {
     const correctPass = await bcrypt.compare(password, dbUser.password);
